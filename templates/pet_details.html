@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block title %}
+    Add Pet
+{% endblock %}
+
+{% block content %}
+<header>
+    <h1 class="text-center">{{pet.name}}</h1>
+</header>
+<div class="row ">
+    <div class="col-sm-6 mb-5">
+        <div class="container border rounded pt-3">
+            <a href="/{{pet.id}}"><img src="{{pet.photo_url}}" alt="Pet_{{pet.name}}" class="img-fluid" ></a>
+            <p>
+            {{pet.name}}
+            {% if pet.available == True %}
+            <b class="text-info">is available!</b>    
+            {% else %}
+            was <b class="text-danger">ADOPTED!</b>
+            {% endif%}
+            </p>
+        </div>
+    </div>
+    <div class="col-sm-6 mb-5">
+            <form id="snack-add-form" method="POST">
+                {{ form.hidden_tag() }} <!--add type=hidden form fields -->
+            
+                {% for field in form
+                       if field.widget.input_type != 'hidden' %}
+                <div class="form-group">
+                    <p>
+                      {{ field.label }}
+                      {{ field(class_="form-control") }}
+                    
+                      {% for err in field.errors %}
+                      <small class="form-text text-danger">
+                      {{err}}
+                      </small>
+                      {% endfor %}
+                    </p>
+                </div>
+                {% endfor %}
+                <div class="container d-flex justify-content-center px-0">
+                <button class="btn btn-info btn-lg w-100 mb-4 p-0">Submit</button>
+                </div>
+            </form>
+    </div>
+</div>
+{% endblock %}
